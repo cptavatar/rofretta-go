@@ -11,7 +11,7 @@ const (
 	Thumb Finger = 5
 )
 
-func FingerById(i int) Finger {
+func CreateFinger(i int) Finger {
 	switch (i){
 	case 1:
 		return Index

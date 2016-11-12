@@ -33,7 +33,7 @@ var guitarStandardTuning = instrument{
 	maxFret: 24,
 	midiNoteNumbers: []uint8{40, 45, 50, 55, 59, 64}}
 
-func FindInstrument(t InstrumentType) Instrument {
+func CreateInstrument(t InstrumentType) Instrument {
 	//for now, everyone gets standard tuning
 	return guitarStandardTuning;
 }

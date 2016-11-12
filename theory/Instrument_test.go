@@ -3,7 +3,7 @@ package theory
 import "testing"
 
 func TestInstrument(t *testing.T) {
-	instrument := FindInstrument(GuitarStandardTuning)
+	instrument := CreateInstrument(GuitarStandardTuning)
 	if instrument.MaxFret() != 24 {
 		t.Error("MaxFret should be 24")
 	}
