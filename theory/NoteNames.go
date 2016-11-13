@@ -3,14 +3,14 @@ package theory
 import "strings"
 
 type NoteName interface {
-	Offset() int8
 	Name() string
+	Offset() int8
 	Index() int8
 }
 
 type noteName struct {
-	offset int8
 	name   string
+	offset int8
 	index  int8
 }
 
@@ -20,14 +20,14 @@ var notesByOffset = make(map[int8]noteName)
 
 func init() {
 	var names = []noteName{
-		noteName{name:"", offset: -1, index:-1},
-		noteName{name:"C", offset: 0, index:0},
-		noteName{name:"D", offset: 2, index:1},
-		noteName{name:"E", offset: 4, index:2},
-		noteName{name:"F", offset: 5, index:3},
-		noteName{name:"G", offset: 7, index:4},
-		noteName{name:"A", offset: 9, index:5},
-		noteName{name:"B", offset: 11, index:6}}
+		noteName{"", -1, -1},
+		noteName{"C", 0, 0},
+		noteName{"D", 2, 1},
+		noteName{"E", 4, 2},
+		noteName{"F", 5, 3},
+		noteName{"G", 7, 4},
+		noteName{"A", 9, 5},
+		noteName{"B", 11, 6}}
 	for i := 0; i < 8; i++ {
 		notesByOffset[names[i].offset] = names[i]
 		notesByIndex[names[i].index] = names[i]
@@ -45,22 +45,21 @@ func (nn noteName) Index() int8 {
 	return nn.index
 }
 
-func CreateNoteByName(name string) NoteName {
+func CreateNoteName(name string) NoteName {
 	if val, ok := notesByName[strings.ToUpper(name)]; ok {
 		return val
 	}
 	return notesByName[""]
 }
-func CreateNoteByIndex(idx int8) NoteName {
+func CreateNoteNameByIndex(idx int8) NoteName {
 	if val, ok := notesByIndex[idx]; ok {
 		return val
 	}
 	return notesByIndex[-1]
 }
-func CreateNoteByOffset(offset int8) NoteName {
+func CreateNoteNameByOffset(offset int8) NoteName {
 	if val, ok := notesByOffset[offset]; ok {
 		return val
-
 	}
 	return notesByOffset[-1]
 }
