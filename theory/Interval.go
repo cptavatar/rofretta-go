@@ -1,5 +1,6 @@
 package theory
 
+// IntervalType is used to provide a friendly name that can be used to refer to specific Intervals
 type IntervalType uint8
 
 const (
@@ -30,6 +31,8 @@ const (
 	ITMajorThirteen
 )
 
+// An Interval is provides a long name, a short name, its offset in raw half steps, and diatonic steps.
+// For instance, a MajorThird has an offset of 4 halfsteps, but is 2 diatonicSteps (C->D->E)
 type Interval interface {
 	Name() string
 	Offset() uint8
@@ -87,6 +90,7 @@ func (interval interval) DiatonicSteps() uint8 {
 	return interval.diatonicSteps
 }
 
+// Given an IntervalType, return the corresponding Interval
 func CreateInterval(it IntervalType) Interval {
 	return intervalsByType[it]
 }

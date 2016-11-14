@@ -1,6 +1,6 @@
 package theory
 
-
+// ChordType are constants that can be used to indicate the kind of chord one wants
 type ChordType uint8
 
 const (
@@ -41,6 +41,8 @@ const (
 	CTMinorThirteen
 )
 
+//A chord is made up of a long descriptive name, a short
+//name as we would expect in a file, and a list of intervals that define the chord
 type Chord interface {
 	Name() string
 	ShortName() string
@@ -121,6 +123,8 @@ func init() {
 		}
 	}
 }
+// Given a short name, the chord for the name.
+// TODO - consider better error handling, bad names are currently fatal
 func CreateChordByShortName(shortName string) Chord {
 	retval := chordByShortName[shortName]
 	if (retval == nil) {
@@ -129,5 +133,8 @@ func CreateChordByShortName(shortName string) Chord {
 	return retval
 }
 
-
+// Given a ChordType, return a chord definition
+func CreateChord(tp ChordType) Chord {
+	return chordByType[tp]
+}
 

@@ -1,5 +1,6 @@
 package theory
 
+// Finger is used to indicate which finger is used to press a fret, if we know it
 type Finger int8
 
 const (
@@ -11,6 +12,7 @@ const (
 	Thumb Finger = 5
 )
 
+// Given an int, return the appropriate Finger if known else Unknown
 func CreateFinger(i int) Finger {
 	switch (i){
 	case 1:

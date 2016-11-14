@@ -5,6 +5,7 @@ import (
 	"github.com/Sirupsen/logrus"
 )
 
+// Create a shared logger so we can control in one spot
 var Log = logrus.New()
 
 func init() {
