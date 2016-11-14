@@ -30,5 +30,5 @@ func (string instrumentString) Finger() Finger {
 }
 
 func (string instrumentString) Disabled() bool {
-	return string.finger == -1
+	return string.fret == -1
 }

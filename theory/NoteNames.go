@@ -14,9 +14,9 @@ type noteName struct {
 	index  int8
 }
 
-var notesByName = make(map[string]noteName)
-var notesByIndex = make(map[int8]noteName)
-var notesByOffset = make(map[int8]noteName)
+var notesByName = make(map[string]*noteName)
+var notesByIndex = make(map[int8]*noteName)
+var notesByOffset = make(map[int8]*noteName)
 
 func init() {
 	var names = []noteName{
@@ -29,9 +29,9 @@ func init() {
 		noteName{"A", 9, 5},
 		noteName{"B", 11, 6}}
 	for i := 0; i < 8; i++ {
-		notesByOffset[names[i].offset] = names[i]
-		notesByIndex[names[i].index] = names[i]
-		notesByName[names[i].name] = names[i]
+		notesByOffset[names[i].offset] = &names[i]
+		notesByIndex[names[i].index] = &names[i]
+		notesByName[names[i].name] = &names[i]
 	}
 
 }

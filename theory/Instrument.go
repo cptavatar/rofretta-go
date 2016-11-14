@@ -35,5 +35,5 @@ var guitarStandardTuning = instrument{
 
 func CreateInstrument(t InstrumentType) Instrument {
 	//for now, everyone gets standard tuning
-	return guitarStandardTuning;
+	return &guitarStandardTuning;
 }

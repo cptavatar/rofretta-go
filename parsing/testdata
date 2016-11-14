@@ -1,0 +1,31 @@
+# chord definitions
+#
+
+# Open chords, popular voicing
+032010 x32x1x C maj
+002220 xx213x A maj
+xx0331 xxx341 Bb maj
+x00232 xxx132 D maj
+022100 x231xx E maj
+x03211 x03211 F maj
+320003 21xxx3 G maj
+
+
+
+# Open chords, additional voicings
+002224 xx1114 A maj
+332010 342x1x C maj
+032013 x32x14 C maj
+320033 21xx34 G maj
+
+
+# Shapes/Bars
+xx3331 xx2341 Bb maj
+xx3121 xx3121 Db maj
+xx3211 xx3211 F maj
+xx1114 xx1114 Ab maj
+133211 134211 F maj
+113331 113331 Bb maj
+143121 143121 Db maj
+x11343 x11243 Eb maj
+2x14xx 2x14xx B maj

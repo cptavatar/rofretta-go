@@ -1,42 +1,44 @@
 package theory
 
+
 type ChordType uint8
 
 const (
-	Major ChordType = iota
-	Minor
-	DominantSeven
-	Suspended
-	MinorSeven
-	MajorFlatFive
-	Augmented
-	MajorSix
-	MajorSixAddNine
-	MinorSix
-	MinorSixAddNine
-	SevenSuspended
-	MinorSevenFlatFive
-	DiminishedSeven
-	SevenSharpFive
-	SevenFlatFive
-	MajorSeven
-	MinorMajorSeven
-	MajorAddNine
-	SevenSharpNine
-	SevenFlatNine
-	SevenSharpFlatNine
-	MinorNine
-	NineSharpFive
-	NineFlatFive
-	MajorNine
-	NineSharpEleven
-	MinorNineMajorSeven
-	Eleventh
-	MinorEleven
-	Thirteenth
-	ThirteenthFlatNine
-	ThirteenthFlatFiveFlatNine
-	MinorThirteen
+	CTMajor ChordType = iota
+	CTMinor
+	CTDominantSeven
+	CTSuspended
+	CTMinorSeven
+	CTMajorFlatFive
+	CTAugmented
+	CTMajorSix
+	CTMajorSixAddNine
+	CTMinorSix
+	CTMinorSixAddNine
+	CTSevenSuspended
+	CTMinorSevenFlatFive
+	CTDiminishedSeven
+	CTSevenSharpFive
+	CTSevenFlatFive
+	CTMajorSeven
+	CTMinorMajorSeven
+	CTMajorAddNine
+	CTSevenSharpNine
+	CTSevenFlatNine
+	CTSevenSharpFlatNine
+	CTNinth
+	CTMinorNine
+	CTNineSharpFive
+	CTNineFlatFive
+	CTMajorNine
+	CTNineSharpEleven
+	CTMinorNineMajorSeven
+	CTEleventh
+	CTMinorEleven
+	CTThirteenth
+	CTThirteenthFlatNine
+	CTThirteenthFlatFiveFlatNine
+	CTMinorThirteen
 )
 
 type Chord interface {
@@ -51,68 +53,81 @@ type chord struct {
 	intervals []IntervalType
 }
 
-var
-	MAJOR("Major", "maj", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH)),
-MINOR("Minor", "min", Arrays.asList(MINOR_THIRD, PERFECT_FIFTH)),
-DOMINANT_SEVEN("Dominant Seven", "7", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MINOR_SEVENTH)),
-SUSPENDED("Suspended", "sus", Arrays.asList(PERFECT_FOURTH, PERFECT_FIFTH)),
-MINOR_SEVEN("Minor Seven", "min7", Arrays.asList(MINOR_THIRD, PERFECT_FIFTH, MINOR_SEVENTH)),
-
-MAJOR_FLAT_FIVE("Major Flat Five", "maj-5", Arrays.asList(MAJOR_THIRD, TRITONE)),
-AUGMENTED("Augmented", "+", Arrays.asList(MAJOR_THIRD, AUGMENTED_FIFTH)),
-MAJOR_SIX("Major Six", "6", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SIXTH)),
-MAJOR_SIX_ADD_NINE("Major Six Add Nine", "6/9", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SIXTH, MAJOR_NINTH)),
-MINOR_SIX("Minor Six", "m6", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SIXTH)),
-MINOR_SIX_ADD_NINE("Minor Six Add Nine", "m6/9", Arrays.asList(MINOR_THIRD, PERFECT_FIFTH, MAJOR_SIXTH, MAJOR_NINTH)),
-
-
-SEVEN_SUSPENDED("Seven Suspended", "sus7", Arrays.asList(PERFECT_FOURTH, PERFECT_FIFTH, MINOR_SEVENTH)),
-
-MINOR_SEVEN_FLAT_FIVE("Minor Seven Flat Five", "min7-5", Arrays.asList(MINOR_THIRD, TRITONE, MINOR_SEVENTH)),
-DIMINISHED_SEVEN("Diminished Seven", "dim7", Arrays.asList(MINOR_THIRD, TRITONE, DIMINISHED_SEVENTH)),
-SEVEN_SHARP_FIVE("Seven Sharp Five", "7+5", Arrays.asList(MAJOR_THIRD, AUGMENTED_FIFTH, MINOR_SEVENTH)),
-SEVEN_FLAT_FIVE("Seven Flat Five", "7-5", Arrays.asList(MAJOR_THIRD, TRITONE, MINOR_SEVENTH)),
-MAJOR_SEVEN("Major Seven", "maj7", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SEVENTH)),
-MINOR_MAJOR_SEVEN("Minor Major Seven", "min+7", Arrays.asList(MINOR_THIRD, PERFECT_FIFTH, MAJOR_SEVENTH)),
-MAJOR_ADD_NINE("Major Add Nine", "add9", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_NINTH)),
-SEVEN_SHARP_NINE("Seven Sharp Nine", "7+9", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MINOR_SEVENTH, AUGMENTED_NINTH)),
-SEVEN_FLAT_NINE("Seven Flat Nine", "7-9", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MINOR_SEVENTH, MINOR_NINTH)),
-SEVEN_SHARP_FIVE_FLAT_NINE("Seven Sharp Five Flat Nine", "7+5-9", Arrays.asList(MAJOR_THIRD, AUGMENTED_FIFTH, MINOR_SEVENTH, MINOR_NINTH)),
-NINTH("Ninth", "9", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MINOR_SEVENTH, MAJOR_NINTH)),
-MINOR_NINE("Minor Nine", "min9", Arrays.asList(MINOR_THIRD, PERFECT_FIFTH, MINOR_SEVENTH, MAJOR_NINTH)),
-NINE_SHARP_FIVE("Nine Sharp Five", "9+5", Arrays.asList(MAJOR_THIRD, AUGMENTED_FIFTH, MINOR_SEVENTH, MAJOR_NINTH)),
-NINE_FLAT_FIVE("Nine Flat Five", "9-5", Arrays.asList(MAJOR_THIRD, TRITONE, MINOR_SEVENTH, MAJOR_NINTH)),
-MAJOR_NINE("Major Nine", "maj9", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SEVENTH, MAJOR_NINTH)),
-NINE_SHARP_ELEVEN("Nine Sharp Eleven", "9+11", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SEVENTH, MAJOR_NINTH)),
-MINOR_NINE_MAJOR_SEVEN("Minor Nine Major Seven", "min9+7", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SEVENTH, MAJOR_NINTH)),
-ELEVENTH("Eleventh", "11", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SEVENTH, MAJOR_NINTH)),
-MINOR_ELEVEN("Minor Eleven", "min11", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SEVENTH, MAJOR_NINTH)),
-THIRTEENTH("Thirteenth", "13", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SEVENTH, MAJOR_NINTH)),
-THIRTEENTH_FLAT_NINE("Thirteenth Flat Nine", "13-9", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SEVENTH, MAJOR_NINTH)),
-THIRTEENTH_FLAT_FIVE_FLAT_NINE("Thirteenth Flat Five Flat Nine", "13-5-9", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SEVENTH, MAJOR_NINTH)),
-MINOR_THIRTEENTH("Minor Thirteenth", "min13", Arrays.asList(MAJOR_THIRD, PERFECT_FIFTH, MAJOR_SEVENTH, MAJOR_NINTH));
-
-private static final Map<String, ChordType> typeByPrettyName = new HashMap<>();
-private static final Map<String, ChordType> typeByAbbreviation = new HashMap<>();
-private static final Map<Integer, List<ChordType>> typesBySize = new HashMap<>();
-
-static {
-for (ChordType type : ChordType.values()) {
-typeByPrettyName.put(type.getPrettyName(), type);
-typeByAbbreviation.put(type.getAbbreviation(), type);
-int size = type.intervals.size() + 1;
-if (typesBySize.containsKey(size)) {
-typesBySize.get(size).add(type);
-} else {
-List<ChordType> types = new ArrayList<>();
-types.add(type);
-typesBySize.put(size, types);
+func (chord chord) Name() string {
+	return chord.name
 }
+func (chord chord) ShortName() string {
+	return chord.shortName
 }
+func (chord chord) Intervals() []Interval {
+	intervalSlice := make([]Interval, len(chord.intervals) + 1, len(chord.intervals) + 1)
+	intervalSlice[0] = CreateInterval(ITPerfectUnision)
+	for i := 1; i < len(intervalSlice); i++ {
+		intervalSlice[i] = CreateInterval(chord.intervals[i - 1])
+	}
+	return intervalSlice
 }
 
+var chordByType = make(map[ChordType]*chord)
+var chordByShortName = make(map[string]*chord)
+var chordsByIntervalCount = make(map[int][]*chord)
 
-private final String prettyName;
-private final String abbreviation;
-private final List<Interval> intervals;
+func init() {
+	chordByType[CTMajor] = &chord{"Major", "maj", []IntervalType{ITMajorThird, ITPerfectFifth}}
+	chordByType[CTMinor] = &chord{"Minor", "min", []IntervalType{ITMinorThird, ITPerfectFifth}}
+	chordByType[CTDominantSeven] = &chord{"Dominant Seven", "7", []IntervalType{ITMajorThird, ITPerfectFifth, ITPerfectFifth}}
+	chordByType[CTSuspended] = &chord{"Suspended", "sus", []IntervalType{ITPerfectFourth, ITPerfectFifth}}
+	chordByType[CTMinorSeven] = &chord{"Minor Seven", "min7", []IntervalType{ITMinorThird, ITPerfectFifth, ITMinorSeventh}}
+	chordByType[CTMajorFlatFive] = &chord{"Major Flat Five", "maj-5", []IntervalType{ITMajorThird, ITTritone}}
+	chordByType[CTAugmented] = &chord{"Augmented", "+", []IntervalType{ITMajorThird, ITAugmentedFifth}}
+	chordByType[CTMajorSix] = &chord{"Major Six", "6", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSixth}}
+	chordByType[CTMajorSixAddNine] = &chord{"Major Six Add Nine", "6/9", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSixth, ITMajorNinth}}
+	chordByType[CTMinorSix] = &chord{"Minor Six", "m6", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSixth}}
+	chordByType[CTMinorSixAddNine] = &chord{"Minor Six Add Nine", "m6/9", []IntervalType{ITMinorThird, ITPerfectFifth, ITMajorSixth, ITMajorNinth}}
+	chordByType[CTSevenSuspended] = &chord{"Seven Suspended", "sus7", []IntervalType{ITPerfectFourth, ITPerfectFifth, ITMinorSeventh}}
+	chordByType[CTMinorSevenFlatFive] = &chord{"Minor Seven Flat Five", "min7-5", []IntervalType{ITMinorThird, ITTritone, ITMinorSeventh}}
+	chordByType[CTDiminishedSeven] = &chord{"Diminished Seven", "dim7", []IntervalType{ITMinorThird, ITTritone, ITDiminishedSeventh}}
+	chordByType[CTSevenSharpFive] = &chord{"Seven Sharp Five", "7+5", []IntervalType{ITMajorThird, ITAugmentedFifth, ITMinorSeventh}}
+	chordByType[CTSevenFlatFive] = &chord{"Seven Flat Five", "7-5", []IntervalType{ITMajorThird, ITTritone, ITMinorSeventh}}
+	chordByType[CTMajorSeven] = &chord{"Major Seven", "maj7", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSeventh}}
+	chordByType[CTMinorMajorSeven] = &chord{"Minor Major Seven", "min+7", []IntervalType{ITMinorThird, ITPerfectFifth, ITMajorSeventh}}
+	chordByType[CTMajorAddNine] = &chord{"Major Add Nine", "add9", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorNinth}}
+	chordByType[CTSevenSharpNine] = &chord{"Seven Sharp Nine", "7+9", []IntervalType{ITMajorThird, ITPerfectFifth, ITMinorSeventh, ITAugmentedNinth}}
+	chordByType[CTSevenFlatNine] = &chord{"Seven Flat Nine", "7-9", []IntervalType{ITMajorThird, ITPerfectFifth, ITMinorSeventh, ITMinorNinth}}
+	chordByType[CTSevenSharpFlatNine] = &chord{"Seven Sharp Five Flat Nine", "7+5-9", []IntervalType{ITMajorThird, ITAugmentedFifth, ITMinorSeventh, ITMinorNinth}}
+	chordByType[CTNinth] = &chord{"Ninth", "9", []IntervalType{ITMajorThird, ITPerfectFifth, ITMinorSeventh, ITMajorNinth}}
+	chordByType[CTMinorNine] = &chord{"Minor Nine", "min9", []IntervalType{ITMinorThird, ITPerfectFifth, ITMinorSeventh, ITMajorNinth}}
+	chordByType[CTNineSharpFive] = &chord{"Nine Sharp Five", "9+5", []IntervalType{ITMajorThird, ITAugmentedFifth, ITMinorSeventh, ITMajorNinth}}
+	chordByType[CTNineFlatFive] = &chord{"Nine Flat Five", "9-5", []IntervalType{ITMajorThird, ITTritone, ITMinorSeventh, ITMajorNinth}}
+	chordByType[CTMajorNine] = &chord{"Major Nine", "maj9", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSeventh, ITMajorNinth}}
+	chordByType[CTNineSharpEleven] = &chord{"Nine Sharp Eleven", "9+11", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSeventh, ITMajorNinth}}
+	chordByType[CTMinorNineMajorSeven] = &chord{"Minor Nine Major Seven", "min9+7", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSeventh, ITMajorNinth}}
+	chordByType[CTEleventh] = &chord{"Eleventh", "11", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSeventh, ITMajorNinth}}
+	chordByType[CTMinorEleven] = &chord{"Minor Eleven", "min11", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSeventh, ITMajorNinth}}
+	chordByType[CTThirteenth] = &chord{"Thirteenth", "13", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSeventh, ITMajorNinth}}
+	chordByType[CTThirteenthFlatNine] = &chord{"Thirteenth Flat Nine", "13-9", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSeventh, ITMajorNinth}}
+	chordByType[CTThirteenthFlatFiveFlatNine] = &chord{"Thirteenth Flat Five Flat Nine", "13-5-9", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSeventh, ITMajorNinth}}
+	chordByType[CTMinorThirteen] = &chord{"Minor Thirteenth", "min13", []IntervalType{ITMajorThird, ITPerfectFifth, ITMajorSeventh, ITMajorNinth}}
+
+	for _, chrd := range chordByType {
+		chordByShortName[chrd.shortName] = chrd
+		intervalCount := len(chrd.intervals)
+		if slice, ok := chordsByIntervalCount[intervalCount]; ok {
+			chordsByIntervalCount[intervalCount] = append(slice, chrd)
+		} else {
+			chrdSlice := make([]*chord, 1, 7)
+			chrdSlice[0] = chrd
+			chordsByIntervalCount[intervalCount] = chrdSlice
+		}
+	}
 }
+func CreateChordByShortName(shortName string) Chord {
+	retval := chordByShortName[shortName]
+	if (retval == nil) {
+		Log.WithField("name", shortName).Fatal("Unknown chord type")
+	}
+	return retval
+}
+
+
+

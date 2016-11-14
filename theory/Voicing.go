@@ -9,7 +9,7 @@ type Voicing interface {
 	UnidentifedVoicing
 	Type() VocingType
 	Root() Note
-	Chord() ChordType
+	Chord() Chord
 }
 
 type unidentifedVoicing struct {
@@ -21,7 +21,7 @@ type voicing struct {
 	unidentifedVoicing
 	vType VocingType
 	root  Note
-	chord ChordType
+	chord Chord
 }
 
 func (vc unidentifedVoicing) Strings() []InstrumentString {
@@ -36,6 +36,34 @@ func (vc voicing) Type() VocingType {
 func (vc voicing) Root() Note {
 	return vc.root
 }
-func (vc voicing) Chord() ChordType {
+func (vc voicing) Chord() Chord {
 	return vc.chord
+}
+
+func CreateVoicing(strings []InstrumentString, instrument Instrument, root Note, chord Chord) Voicing {
+	retval := voicing{root:root, chord:chord }
+	retval.strings = strings
+	retval.instrument = instrument
+
+	//This algorithm could use some work, only really works for open
+	var muted, open bool
+	for _, str := range retval.Strings() {
+		if str.Fret() == 0 {
+			open = true
+		} else if str.Fret() == -1 {
+			muted = true
+		}
+	}
+	if open {
+		retval.vType = Open
+	} else if muted {
+		retval.vType = Shape
+	} else {
+		retval.vType = Bar
+	}
+
+	return retval
+}
+func CreateUnidentifedVoicing(strings []InstrumentString, instrument Instrument) UnidentifedVoicing {
+	return unidentifedVoicing{strings, instrument}
 }
