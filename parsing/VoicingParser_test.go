@@ -15,7 +15,7 @@ func TestParseVoicing(t *testing.T) {
 	if ! valid {
 		t.Error("ParseVoicing return invalid for valid chord defintion")
 	}
-	if voicing.Root().Root().Name() != "B" || voicing.Root().Modifier() != -1 {
+	if voicing.Root().Natural().Name() != "B" || voicing.Root().Modifier() != -1 {
 		t.Error("Parser should have identifed root as Bb")
 	}
 	if voicing.Chord().ShortName() != "maj" {

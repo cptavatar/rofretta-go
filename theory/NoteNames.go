@@ -2,6 +2,8 @@ package theory
 
 import "strings"
 
+// The natural notes (white keys). The offset can be used to figure actual space beteween
+// notes (taking in account the black keys), while index can be used for diatonic calculations.
 type NoteName interface {
 	Name() string
 	Offset() int8

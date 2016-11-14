@@ -1,31 +1,68 @@
 package theory
 
-import "strings"
+import (
+	"bytes"
+	"strings"
+)
 
+// Notes capture the natural name of a note (A,B,C,D,E,F,G) as well
+// as how sharp/flat it is. We can also send a "Disabled" note as a placeholder
+// if, for instance, we are sending back the note names of the current voicing
+// but not all strings are played
 type Note interface {
-	Root() NoteName
+	Natural() NoteName
 	Modifier() int8
 	Disabled() bool
+	Name() string
+	EnharmonicValue() int8
 }
 
 type note struct {
-	root     NoteName
+	natural  NoteName
 	modifier int8
 }
 
-func (note note) Root() NoteName {
-	return note.root
+func (note note) Natural() NoteName {
+	return note.natural
 }
 func (note note) Modifier() int8 {
 	return note.modifier
 }
+
 func (note note) Disabled() bool {
-	return note.root.Offset() == -1
+	return note.natural.Offset() == Disabled
+}
+
+func (note note) EnharmonicValue() int8 {
+	if (note.Disabled()) {
+		return -1
+	}
+	var calculatedValue int8 = note.natural.Offset() + note.modifier
+
+	if calculatedValue < 0 {
+		calculatedValue = 12 + calculatedValue
+	} else if calculatedValue > 11 {
+		calculatedValue = calculatedValue - 12
+	}
+
+	return calculatedValue
+}
+
+func (note note) Name() string {
+	var buffer bytes.Buffer
+	buffer.WriteString(note.natural.Name())
+	for i := note.modifier; i > 0; i-- {
+		buffer.WriteRune('\u266F')
+	}
+	for i := note.modifier; i < 0; i++ {
+		buffer.WriteRune('\u266D')
+	}
+	return buffer.String()
 }
 
 func CreateNote(str string) Note {
 	var nt note
-	nt.root = CreateNoteName("")
+	nt.natural = CreateNoteName("")
 	tempStr := []rune(strings.TrimSpace(str))
 	for i := 0; i < len(tempStr); i++ {
 		switch (tempStr[i]) {
@@ -42,7 +79,7 @@ func CreateNote(str string) Note {
 		case 'A':
 			fallthrough
 		case 'B':
-			nt.root = CreateNoteName(string(tempStr[i]))
+			nt.natural = CreateNoteName(string(tempStr[i]))
 			break;
 		case '\u266F':
 			fallthrough
@@ -62,33 +99,23 @@ func CreateNote(str string) Note {
 func CreateNoteInt(midiValue int8) Note {
 	baseValue := midiValue % 12;
 	var note note
-	note.root = CreateNoteNameByOffset(baseValue);
+	note.natural = CreateNoteNameByOffset(baseValue);
 
-	if note.root.Index() == -1 {
+	if note.natural.Index() == -1 {
 		note.modifier = 1
-		note.root = CreateNoteNameByOffset(baseValue - 1);
+		note.natural = CreateNoteNameByOffset(baseValue - 1);
 	}
 	return note
 }
-/*
-public static List<Note> notes(ChordType type, Note root) {
-List<Interval> intervals = type.getIntervals();
-List<Note> notes = new ArrayList<>(intervals.size() + 1);
-notes.add(root);
-intervals.forEach(interval -> notes.add(note(interval, root)));
-return notes;
-}
 
-public static Note note(Interval interval, Note root) {
-NoteName name = root.getRoot();
-int index = (name.getIndex() + interval.getDiatonicSteps()) % 7;
-NoteName newName = NoteName.valueOfIndex(index);
-int rootValue = NoteService.enharmonicValue(root);
-int newNoteBaseValue = NoteService.enharmonicValue(new Note(newName, 0));
-if (newNoteBaseValue < rootValue) {
-newNoteBaseValue = newNoteBaseValue + 12;
+func CreateNoteForInterval(interval Interval, root Note) Note {
+	index := (root.Natural().Index() + interval.DiatonicSteps()) % 7
+	noteName := CreateNoteNameByIndex(index)
+	newNote := note{noteName, 0}
+	baseValue := newNote.EnharmonicValue()
+	if (baseValue < root.EnharmonicValue()) {
+		baseValue = baseValue + 12
+	}
+	newNote.modifier = interval.Offset() - (baseValue - root.EnharmonicValue())
+	return newNote
 }
-int modifier = interval.offset() - (newNoteBaseValue - rootValue);
-return new Note(newName, modifier);
-
-}*/

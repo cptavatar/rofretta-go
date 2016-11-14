@@ -35,16 +35,16 @@ const (
 // For instance, a MajorThird has an offset of 4 halfsteps, but is 2 diatonicSteps (C->D->E)
 type Interval interface {
 	Name() string
-	Offset() uint8
+	Offset() int8
 	ShortName() string
-	DiatonicSteps() uint8
+	DiatonicSteps() int8
 }
 
 type interval struct {
 	name          string
-	offset        uint8
+	offset        int8
 	shortName     string
-	diatonicSteps uint8
+	diatonicSteps int8
 }
 
 var intervalsByType = make(map[IntervalType]*interval)
@@ -80,13 +80,13 @@ func init() {
 func (interval interval) Name() string {
 	return interval.name
 }
-func (interval interval) Offset() uint8 {
+func (interval interval) Offset() int8 {
 	return interval.offset
 }
 func (interval interval) ShortName() string {
 	return interval.shortName
 }
-func (interval interval) DiatonicSteps() uint8 {
+func (interval interval) DiatonicSteps() int8 {
 	return interval.diatonicSteps
 }
 

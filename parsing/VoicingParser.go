@@ -6,6 +6,7 @@ import (
 	"github.com/cptavatar/rofretta-go/theory"
 )
 
+// VoicingParser can extract voicing information from strings, based on our standard encoding
 type VoicingParser interface {
 	ParseVoicing(line string) (theory.Voicing, bool)
 	ParseStrings(line string) ([]theory.InstrumentString, bool)
@@ -41,6 +42,7 @@ func (vp voicingParser) ParseVoicing(line string) (voicing theory.Voicing, valid
 func (vp voicingParser) ParseStrings(line string) (strgs []theory.InstrumentString, valid bool) {
 	frets := vp.parseInts(line, len(vp.instrument.MidiNoteNumbers()))
 	strgs = vp.createStrings(frets, nil)
+	valid = true
 	return
 }
 
@@ -60,6 +62,7 @@ func (vp voicingParser) createStrings(frets *[]int, fingers *[]int) []theory.Ins
 	return retval
 }
 
+// TODO improve error handling
 func (vp voicingParser) parseInts(str string, size int) *[]int {
 	var retval = make([]int, 0, size)
 	var index = 0

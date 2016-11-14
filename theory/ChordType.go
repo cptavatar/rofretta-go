@@ -47,6 +47,7 @@ type Chord interface {
 	Name() string
 	ShortName() string
 	Intervals() []Interval
+	Notes(root Note) []Note
 }
 
 type chord struct {
@@ -69,11 +70,21 @@ func (chord chord) Intervals() []Interval {
 	}
 	return intervalSlice
 }
+func (chord chord) Notes(root Note) []Note {
+	intervals := chord.Intervals()
+	size := len(intervals)
+	notes := make([]Note, size, size)
+	for i, interval := range intervals {
+		notes[i] = CreateNoteForInterval(interval, root)
+	}
+	return notes
+}
 
 var chordByType = make(map[ChordType]*chord)
 var chordByShortName = make(map[string]*chord)
-var chordsByIntervalCount = make(map[int][]*chord)
+var chordsByIntervalCount = make(map[int][]Chord)
 
+//TODO chordtype should be part of the struct, testable, returnable
 func init() {
 	chordByType[CTMajor] = &chord{"Major", "maj", []IntervalType{ITMajorThird, ITPerfectFifth}}
 	chordByType[CTMinor] = &chord{"Minor", "min", []IntervalType{ITMinorThird, ITPerfectFifth}}
@@ -113,11 +124,11 @@ func init() {
 
 	for _, chrd := range chordByType {
 		chordByShortName[chrd.shortName] = chrd
-		intervalCount := len(chrd.intervals)
+		intervalCount := len(chrd.intervals) + 1
 		if slice, ok := chordsByIntervalCount[intervalCount]; ok {
 			chordsByIntervalCount[intervalCount] = append(slice, chrd)
 		} else {
-			chrdSlice := make([]*chord, 1, 7)
+			chrdSlice := make([]Chord, 1, 7)
 			chrdSlice[0] = chrd
 			chordsByIntervalCount[intervalCount] = chrdSlice
 		}
@@ -133,6 +144,9 @@ func CreateChordByShortName(shortName string) Chord {
 	return retval
 }
 
+func CreateChordsByIntervalCount(count int) []Chord {
+	return chordsByIntervalCount[count]
+}
 // Given a ChordType, return a chord definition
 func CreateChord(tp ChordType) Chord {
 	return chordByType[tp]
